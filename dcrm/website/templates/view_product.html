@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Product Details</h1>
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <th>Name:</th>
+        <td>{{ product.name }}</td>
+      </tr>
+      <tr>
+        <th>Barcode:</th>
+        <td>{{ product.barcode }}</td>
+      </tr>
+      <tr>
+        <th>Price:</th>
+        <td>${{ product.price }}</td>
+      </tr>
+      <tr>
+        <th>Description:</th>
+        <td>{{ product.description }}</td>
+      </tr>
+      <tr>
+        <th>Weight:</th>
+        <td>{{ product.weight }} g</td>
+      </tr>
+      <tr>
+        <th>Category:</th>
+        <td>{{ product.category }}</td>
+      </tr>
+      <tr>
+        <th>Brand:</th>
+        <td>{{ product.brand }}</td>
+      </tr>
+      <tr>
+        <th>Stock Quantity:</th>
+        <td>{{ product.stock_quantity }}</td>
+      </tr>
+      <tr>
+        <th>Units Sold:</th>
+        <td>{{ product.units_sold }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <a href = "{% url 'home' %}" class="btn btn-secondary">Back</a>
+  <a href = "{% url 'delete_product' product.id %}" class="btn btn-danger">Delete</a>
+  <a href = "{% url 'edit_product' product.id %}" class="btn btn-info">Update Product</a>
+
+</div>
+{% endblock %}

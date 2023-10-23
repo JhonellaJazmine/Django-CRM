@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{%block content%}
+
+<h1>Brand Details</h1>
+
+<div class="card">
+    <div class="card-header">
+        <strong> {{ brand.name }} </strong>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            {{ brand.description }}
+        </p>
+    
+     
+    </div>
+  </div>
+
+  <br/>
+  <a href = "{% url 'home' %}" class="btn btn-secondary">Back</a>
+  <a href = "{% url 'delete_brand' brand.id %}" class="btn btn-danger">Delete</a>
+  <a href = "{% url 'edit_brand' brand.id %}" class="btn btn-info">Update Brand</a>
+
+{% endblock %}

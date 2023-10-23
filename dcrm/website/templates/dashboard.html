@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{%block content%}
+
+<div style="margin-left: 50px;"><h1>ADMIN DASHBOARD</h1>
+
+<div class="container">
+</br></br>
+  <div class="row">
+    <div class="col-sm-2">
+    <a href="customer.html" style="text-decoration: none; color: white;">
+      <div class="card text-bg-success">
+        <div class="card-header">Customers</div>
+        <div class="card-body">
+        <h5 class="card-title">Total Customers</h5>
+        <p class="card-text" style="font-size: 48px; text-align: center;">{{ record_count }}</p>
+        </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-2">
+    <a href="brand.html" style="text-decoration: none; color: white;">
+      <div class="card text-bg-danger">
+        <div class="card-header">Brands</div>
+        <div class="card-body">
+        <h5 class="card-title">Total Brands</h5>
+        <p class="card-text" style="font-size: 48px; text-align: center;">{{ brand_count }}</p>
+        </div>
+      </div>
+      </a>
+    </div>
+    <div class="col-sm-8">
+    <a href="#" style="text-decoration: none; color: white;">
+  <div class="card text-bg-primary" style="height: 100%;">
+    <div class="card-header">Products</div>
+    <div class="card-body" style="height: 100%;">
+      <div class="row">
+        <div class="col-sm-6">
+          <h5 class="card-title">Total Products</h5>
+          <p class="card-text" style="font-size: 48px; text-align: center;">#</p>
+        </div>
+        <div class="col-sm-6">
+          <h6 class="card-title">Best Selling Products</h6>
+          <!-- <% services = Service.joins(:appointments).group(:id).order('count(appointments.id) DESC').limit(3) %>
+          <% if services.any? %>
+            <ul>
+              <% services.each do |service| %>
+                <li style="list-style-type: none;"><%= service.name %> - <%= service.appointments.count %> appointments</li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p>No services found.</p>
+          <% end %> -->
+        </div>
+      </div>
+    </div>
+    </a>
+  </div>
+</div>
+
+<div class="container">
+</br></br></br>
+  <div class="row">
+    <div class="col-md-4">
+    <a href="#" style="text-decoration: none; color: white;">
+      <div class="card">
+        <div class="card-body text-bg-warning">
+        <p class="card-text" style="font-size: 20px; text-align: center;">Admin</br>Button</p>
+        </div>
+      </div>
+      </a>
+    </div>
+    <div class="col-md-4">
+    <a href="#" style="text-decoration: none; color: white;">
+      <div class="card">
+        <div class="card-body text-bg-warning">
+        <p class="card-text" style="font-size: 20px; text-align: center;">Admin</br>Button</p>
+        </div>
+      </div>
+      </a>
+    </div>
+    <div class="col-md-4">
+    <a href="#" style="text-decoration: none; color: white;">
+      <div class="card text-bg-warning">
+        <div class="card-body">
+        <p class="card-text" style="font-size: 20px; text-align: center;">Admin</br>Button</p>
+        </div>
+      </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
