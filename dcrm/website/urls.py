@@ -30,10 +30,8 @@ urlpatterns = [
     path('product/view/<int:product_id>/', views.view_product, name='view_product'),
     path('product/edit/<int:product_id>/', views.edit_product, name='edit_product'),
     path('product/delete/<int:product_id>/', views.delete_product, name='delete_product'),
+    path('user/', views.user, name='user'),
 
-    path('add_role/', views.add_role, name='add_role'),
-    path('user_list/', views.user_list, name='user_list'),
-    
 
 
 

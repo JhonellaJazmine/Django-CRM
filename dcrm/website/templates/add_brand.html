@@ -2,8 +2,8 @@
 {%block content%}
 <div class="col-md-6 offset-md-3">
     <h1>Add Brand</h1>
-<form method ="POST" action="{% url 'add_brand'%}">
-    {% csrf_token %}
+    <form method="POST" action="{% url 'add_brand' %}" enctype="multipart/form-data">  {# Add enctype attribute here #}
+        {% csrf_token %}
     {{ form.as_p }}
 
 

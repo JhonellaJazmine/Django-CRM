@@ -1,31 +1,47 @@
 {% extends 'base.html' %}
-{%block content%}
-
-
+{% block content %}
 <div class="col-md-6 offset-md-3">
-<h1>Register</h1>
-<br/>
+    <h1>Register</h1>
 
-<form method ="POST" action="">
-    {% csrf_token %}
-    {% if form.errors %}
-			<div class="alert alert-warning alert-dismissible fade show" role="alert">
-			  Your Form Has Errors
-			  {% for field in form %}
-			  	{% if field.errors %}
-			  		{{ field.errors }}
-			  	{% endif %}
-			  {% endfor %}
-			  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			</div>
-		{% endif %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Your Form Has Errors
+                {% for field in form %}
+                    {% if field.errors %}
+                        {{ field.errors }}
+                    {% endif %}
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
 
-    {{ form.as_p }}
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        {{ form.first_name.label_tag }}
+        {{ form.first_name }}
+        {{ form.last_name.label_tag }}
+        {{ form.last_name }}
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {{ form.password1.label_tag }}
+        {{ form.password1 }}
+        {{ form.password2.label_tag }}
+        {{ form.password2 }}
 
-    <br />
-    <button type="submit" class="btn btn-secondary">Register</button>
+        {{ form.roles.label_tag }}
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            {% for role in form.roles %}
+                <div style="flex-basis: calc(33.33% - 10px);">  {# Adjust the flex-basis and gap values as needed #}
+                    {{ role.tag }}
+                    {{ role.choice_label }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-secondary">Register</button>
     </form>
-
 </div>
-
 {% endblock %}

@@ -1,7 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from django import forms
-from .models import Record, Brand, Category, Product, Role
+from .models import Record, Brand, Category, Product, User, Role
 
 
 class SignUpForm(UserCreationForm):
@@ -9,14 +8,16 @@ class SignUpForm(UserCreationForm):
     first_name = forms.CharField(label="", max_length=100,  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
     last_name = forms.CharField(label="", max_length=100,  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
 
-    # roles = forms.ModelChoiceField(
-    #     queryset=Role.objects.all(),
-    #     widget=forms.Select(attrs={'class': 'form-control'}),  # Use forms.Select widget for a dropdown
-    # )
+    roles = forms.ModelMultipleChoiceField(
+        queryset=Role.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input', 'style': 'margin-right: 10px;'}),
+        required=True
+    )
+
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'roles')
 
     def __init__(self, *args, **kwargs):
             super(SignUpForm, self).__init__(*args, **kwargs)
@@ -64,9 +65,18 @@ class BrandForm(forms.ModelForm):
             required=False,  # You can set this as required or not based on your requirements
             widget=forms.Textarea(attrs={'placeholder': "Brand Description", "class": "form-control"}),
             label="Brand Description")
+    
+    image = forms.ImageField(
+        required=False,
+        label="Brand Image",
+        widget=forms.FileInput(attrs={"class": "form-control-file"}),
+        initial="image-svgrepo-com.svg"  # Set the default image here
+)
+
+    
     class Meta:
         model = Brand
-        fields = ['name', 'description']
+        fields = ['name', 'description', 'image']
 
 class AddCategoryForm(forms.ModelForm):
     name = forms.CharField(
@@ -133,12 +143,12 @@ class AddProductForm(forms.ModelForm):
         model = Product
         fields = '__all__'
 
-class AddRoleForm(forms.ModelForm):
-    name = forms.CharField(
-        required=True,
-        widget=forms.TextInput(attrs={'placeholder': "Role Name", "class": "form-control"}),
-        label="")
+# class AddRoleForm(forms.ModelForm):
+#     name = forms.CharField(
+#         required=True,
+#         widget=forms.TextInput(attrs={'placeholder': "Role Name", "class": "form-control"}),
+#         label="")
 
-    class Meta:
-        model = Role
-        fields = ['name']
+#     class Meta:
+#         model = Role
+#         fields = ['name']

@@ -1,63 +1,22 @@
-# from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.db import models
-from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 
 # whatever database you use, same code lang rin
 # django will make the class name plural
 
-# class CustomUserManager(UserManager):
-#     def _create_user(self, email, password, **extra_fields):
-#         if not email:
-#             raise ValueError("You have not provided a valid e-mail address")
-#         email = self.normalize_email(email)
-#         user = self.model(email=email, **extra_fields)
-#         user.set_password(password)
-#         user.save(using=self._db)
-
-#         return user
-    
-#     def create_user(self, email=None, password=None, **extra_fields):
-#         extra_fields.setdefault('is_staff', False)
-#         extra_fields.setdefault('is_superuser', False)
-#         return self._create_user(email, password, **extra_fields)
-    
-#     def create_superuser(self, email=None, password=None, **extra_fields):
-#         extra_fields.setdefault('is_staff', True)
-#         extra_fields.setdefault('is_superuser', True)
-#         return self._create_user(email, password, **extra_fields)
-    
-# class User(AbstractBaseUser, PermissionsMixin):
-#     email = models.EmailField(blank=True, default='', unique=True)
-#     name = models.CharField(max_length=255, blank=True, default='')
-
-#     is_active = models.BooleanField(default=True)
-#     is_superuser = models.BooleanField(default=False)
-#     is_staff = models.BooleanField(default=False)
-
-#     date_joined = models.DateTimeField(default=timezone.now)
-#     last_login = models.DateTimeField(blank=True, null=True)
-
-#     objects = CustomUserManager()
-
-#     USERNAME_FIELD = 'email'
-#     EMAIL_FIELD = 'email'
-#     REQUIRED_FIELDS = []
-
-#     class Meta:
-#         verbose_name = 'User'
-#         verbose_name_plural = 'Users'
-    
-#     def get_full_name(self):
-#         return self.name
-
-#     def get_short_name(self):
-#         return self.name or self.email.split('@')[0]
-
 class Role(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
+
+class User(AbstractUser):
+    name = models.CharField(max_length=200, null=True )
+    email = models.EmailField(unique=True, null=True)
+    roles = models.ManyToManyField(Role)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
 class Record(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
@@ -69,8 +28,6 @@ class Record(models.Model):
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     zipcode = models.CharField(max_length=20)
-    # roles = models.ManyToManyField(Role, related_name="records")
-
 
     def __str__(self):
         return(f"{self.first_name} {self.last_name}")
@@ -79,6 +36,8 @@ class Record(models.Model):
 class Brand(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=255, default="No description provided")
+    # image = models.ImageField(null=True, default="image-svgrepo-com.svg")
+    image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.name

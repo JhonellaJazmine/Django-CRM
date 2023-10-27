@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-# from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import SignUpForm, AddRecordForm, BrandForm, AddCategoryForm, AddProductForm, AddRoleForm
-from .models import Record, Brand, Category, Product, Role
+from .forms import SignUpForm, AddRecordForm, BrandForm, AddCategoryForm, AddProductForm
+from .models import Record, Brand, Category, Product, User
 
-def user_list(request):
-    users = User.objects.all()
-    return render(request, 'user_list.html', {'users': users})
+# def user_list(request):
+#     users = User.objects.all()
+#     return render(request, 'user_list.html', {'users': users})
 
 def home(request):
     record_count = count_records()
@@ -153,7 +152,7 @@ def edit_brand(request, brand_id):
     brand = Brand.objects.get (pk=brand_id)
    
     if request.method == 'POST':
-        form = BrandForm(request.POST, instance=brand)
+        form = BrandForm(request.POST, request.FILES, instance=brand)
         if form.is_valid():
             form.save()
             return redirect('brand')  # Redirect to the list of brands
@@ -166,6 +165,7 @@ def add_brand(request):
     form = BrandForm(request.POST or None)
     if request.user.is_authenticated:
         if request.method =="POST":
+            form = BrandForm(request.POST, request.FILES)  # Make sure to include request.FILES
             if form.is_valid():
                 add_brand = form.save()
                 messages.success(request, "Brand Added...")
@@ -316,16 +316,23 @@ def delete_product(request, product_id):
     # Redirect to a page after the product is deleted (e.g., the product list page)
     return redirect('product')  # Assuming 'product' is the name of your product list view
 
-def add_role(request):
-    form = AddRoleForm(request.POST or None)
-    if request.user.is_authenticated:
-        if request.method =="POST":
-            if form.is_valid():
-                add_role = form.save()
-                messages.success(request, "Role Added...")
-                return redirect ('home')
-        return render(request, 'add_role.html', {'form':form})
-    else:
-        messages.success(request, "You Must Be Logged In...")
-        return redirect('home')
+# def add_role(request):
+#     form = AddRoleForm(request.POST or None)
+#     if request.user.is_authenticated:
+#         if request.method =="POST":
+#             if form.is_valid():
+#                 add_role = form.save()
+#                 messages.success(request, "Role Added...")
+#                 return redirect ('home')
+#         return render(request, 'add_role.html', {'form':form})
+#     else:
+#         messages.success(request, "You Must Be Logged In...")
+#         return redirect('home')
     
+def user(request):
+    if request.user.is_authenticated:
+        users = User.objects.all()
+        return render(request, 'user.html', {'users':users})
+    else:
+        messages.success(request, "You Must Be Logged In To Do That...")
+        return redirect('home')

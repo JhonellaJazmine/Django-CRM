@@ -2,7 +2,7 @@
 {%block content%}
 <div class="col-md-6 offset-md-3">
     <h1>Update Brand</h1>
-<form method ="POST">
+    <form method="POST" enctype="multipart/form-data">  {# Add enctype attribute here #}
     {% csrf_token %}
     {{ form.as_p }}
 
